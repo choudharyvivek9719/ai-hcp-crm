@@ -1,0 +1,49 @@
+# ============================
+# AI-HCP-CRM Backend
+# Python 3.11+
+# ============================
+
+# FastAPI
+fastapi==0.115.0
+uvicorn[standard]==0.30.6
+
+# Database
+sqlalchemy==2.0.35
+psycopg2-binary==2.9.9
+
+# Validation
+pydantic==2.9.2
+pydantic-settings==2.5.2
+
+# Environment Variables
+python-dotenv==1.0.1
+
+# LangChain & LangGraph
+langchain==0.3.3
+langchain-core==0.3.10
+langchain-community==0.3.2
+langgraph==0.2.34
+
+# Groq
+groq==0.11.0
+langchain-groq==0.2.0
+
+# API Utilities
+python-multipart==0.0.12
+httpx==0.27.2
+
+# JSON Handling
+orjson==3.10.7
+
+# Date & Time
+python-dateutil==2.9.0.post0
+
+# Logging
+loguru==0.7.2
+
+# CORS
+starlette==0.38.6
+
+# Development
+pytest==8.3.3
+pytest-asyncio==0.24.0
