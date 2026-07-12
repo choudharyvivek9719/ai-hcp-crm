@@ -2,6 +2,9 @@ from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
 from app.api.router import api_router
+from app.database.database import init_db
+
+init_db()
 
 app = FastAPI(
     title="AI First Healthcare CRM",
