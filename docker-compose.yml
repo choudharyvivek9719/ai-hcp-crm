@@ -1,0 +1,76 @@
+version: "3.9"
+
+services:
+
+  postgres:
+    image: postgres:16
+    container_name: hcpcrm-postgres
+    restart: always
+
+    environment:
+      POSTGRES_DB: hcpcrm
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: password
+
+    ports:
+      - "5432:5432"
+
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres -d hcpcrm"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  backend:
+    build:
+      context: ./backend
+
+    container_name: hcpcrm-backend
+
+    restart: always
+
+    depends_on:
+      postgres:
+        condition: service_healthy
+
+    env_file:
+      - ./backend/.env
+
+    ports:
+      - "8000:8000"
+
+    volumes:
+      - ./backend:/app
+
+    command: >
+      uvicorn app.main:app
+      --host 0.0.0.0
+      --port 8000
+      --reload
+
+  frontend:
+    build:
+      context: ./frontend
+
+    container_name: hcpcrm-frontend
+
+    restart: always
+
+    depends_on:
+      - backend
+
+    ports:
+      - "5173:5173"
+
+    volumes:
+      - ./frontend:/app
+      - /app/node_modules
+
+    command: npm run dev -- --host
+
+volumes:
+
+  postgres_data:
